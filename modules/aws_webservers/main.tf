@@ -35,7 +35,7 @@ resource "aws_instance" "ec2_instances_webservers" {
   subnet_id                   = data.terraform_remote_state.get_network_data.outputs.public_subnet_ids[count.index]
   security_groups             = [aws_security_group.web_sg.id]
   associate_public_ip_address = true
-  # user_data                   = count.index < 2 ? file("../../dev/webservers/install_httpd.sh") : null
+  user_data = file("install_httpd.sh")
 
  # user_data                   = var.env == "nonprod" ? file("../../nonprod/webservers/install_httpd.sh") : null
 
@@ -105,8 +105,6 @@ resource "aws_autoscaling_group" "web_server_asg" {
   vpc_zone_identifier       = data.terraform_remote_state.get_network_data.outputs.public_subnet_ids
   health_check_type         = "EC2"
   health_check_grace_period = 300  # Adjust as needed
-  
-  target_group_arns = [aws_lb_target_group.web_target_group.arn]
 
   tag {
     key                 = "Name"

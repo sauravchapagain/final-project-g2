@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo yum -y update
 sudo yum -y install httpd
-myip=curl http://169.254.169.254/latest/meta-data/local-ipv4
+myip=`curl http://169.254.169.254/latest/meta-data/local-ipv4`
 echo "<h1> We are Group 2.  Private IP is $myip this is hosted in private subnet. </h1><br> Group Members:
 <ul>
  	<li>Santosh Aryal</li>
